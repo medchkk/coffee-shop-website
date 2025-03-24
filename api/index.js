@@ -1,9 +1,14 @@
 module.exports = async (req, res) => {
     console.log('✅ Serverless function called');
-    console.log('Request path:', req.path);
+    console.log('Request URL:', req.url);
     console.log('Request method:', req.method);
 
-    if (req.method === 'GET' && req.path === '/api/test') {
+    // Extraire le chemin de req.url
+    const url = new URL(req.url, `https://${req.headers.host}`);
+    const path = url.pathname;
+    console.log('Extracted path:', path);
+
+    if (req.method === 'GET' && path === '/api/test') {
         console.log('✅ /api/test route called');
         return res.status(200).json({ message: 'API is working!' });
     }
