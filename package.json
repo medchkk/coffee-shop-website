@@ -1,0 +1,17 @@
+{
+    "name": "coffee-shop-website",
+    "version": "1.0.0",
+    "main": "api/index.js",
+    "scripts": {
+      "start": "node api/index.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^6.0.0",
+      "jsonwebtoken": "^8.5.1",
+      "dotenv": "^10.0.0",
+      "bcryptjs": "^2.4.3",
+      "cors": "^2.8.5",
+      "serverless-http": "^3.2.0"
+    }
+  }
