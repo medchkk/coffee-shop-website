@@ -21,6 +21,11 @@ app.use(express.json());
 const connectDB = require('../backend/config/db');
 connectDB();
 
+// Test route
+app.get('/api/test', (req, res) => {
+    res.status(200).json({ message: 'API is working!' });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
