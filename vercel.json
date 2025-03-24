@@ -16,15 +16,20 @@
       "dest": "api/index.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "public/pages/$1",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate"
-      }
+      "src": "/",
+      "dest": "public/pages/index.html"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "public/assets/$1"
+    },
+    {
+      "src": "/components/(.*)",
+      "dest": "public/components/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "public/pages/$1"
     }
   ]
 }
