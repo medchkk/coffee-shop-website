@@ -1,17 +1,35 @@
-module.exports = async (req, res) => {
-    console.log('✅ Serverless function called');
-    console.log('Request URL:', req.url);
+const express = require('express');
+const serverless = require('serverless-http');
+
+console.log('✅ api/index.js is being executed');
+
+// Initialize Express app
+const app = express();
+
+console.log('✅ Express app initialized');
+
+// Middleware to parse JSON
+app.use(express.json());
+console.log('✅ JSON middleware applied');
+
+// Middleware to log requests
+app.use((req, res, next) => {
+    console.log('✅ Middleware called');
+    console.log('Request path:', req.path);
     console.log('Request method:', req.method);
+    next();
+});
 
-    // Extraire le chemin de req.url
-    const url = new URL(req.url, `https://${req.headers.host}`);
-    const path = url.pathname;
-    console.log('Extracted path:', path);
+// Test route
+app.get('/api/test', (req, res) => {
+    console.log('✅ /api/test route called');
+    res.status(200).json({ message: 'API is working!' });
+});
 
-    if (req.method === 'GET' && path === '/api/test') {
-        console.log('✅ /api/test route called');
-        return res.status(200).json({ message: 'API is working!' });
-    }
+console.log('✅ Test route defined');
 
-    return res.status(404).json({ message: 'Not found' });
-};
+// Export as a serverless function
+const handler = serverless(app);
+console.log('✅ Serverless handler created');
+
+module.exports = handler;
