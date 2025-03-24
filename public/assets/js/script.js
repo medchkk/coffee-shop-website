@@ -38,7 +38,7 @@ const initializeCart = () => {
       return;
   }
 
-  fetch('https://coffee-shop-website-phi.vercel.app/api/cart', {
+  fetch('/api/cart', {
       method: 'GET',
       headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const addToCart = async (productId) => {
     const headers = { 'Content-Type': 'application/json' };
     headers['Authorization'] = `Bearer ${token}`; // Ajouter le token dans les headers
 
-    const res = await fetch('https://coffee-shop-website-phi.vercel.app/api/cart/add', {
+    const res = await fetch('/api/cart/add', {
       method: 'POST',
       headers,
       body: JSON.stringify({ productId, quantity: 1 }),
@@ -107,7 +107,7 @@ const fetchCart = async () => {
             return;
         }
 
-        const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/cart', {
+        const response = await fetch('/api/cart', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -174,7 +174,7 @@ const updateQuantity = async (productId, newQuantity) => {
 
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/cart/update', {
+        const response = await fetch('/api/cart/update', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ const updateQuantity = async (productId, newQuantity) => {
 const removeFromCart = async (productId) => {
     try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/cart/remove', {
+        const response = await fetch('/api/cart/remove', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -228,7 +228,7 @@ const logout = async () => {
         // Optionnel : Appeler une route de déconnexion côté serveur
         const token = localStorage.getItem('token');
         if (token) {
-            const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/auth/logout', {
+            const response = await fetch('/api/auth/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -270,7 +270,7 @@ const placeOrder = async (e) => {
         const zipCode = document.getElementById('zipCode').value;
 
         // Récupérer le panier
-        const cartResponse = await fetch('https://coffee-shop-website-phi.vercel.app/api/cart', {
+        const cartResponse = await fetch('/api/cart', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -290,7 +290,7 @@ const placeOrder = async (e) => {
         }
 
         // Envoyer la commande
-        const orderResponse = await fetch('https://coffee-shop-website-phi.vercel.app/api/orders', {
+        const orderResponse = await fetch('/api/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -310,7 +310,7 @@ const placeOrder = async (e) => {
         }
 
         // Vider le panier après la commande
-        await fetch('https://coffee-shop-website-phi.vercel.app/api/cart/clear', {
+        await fetch('/api/cart/clear', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -336,7 +336,7 @@ const fetchOrders = async () => {
           return;
       }
 
-      const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/orders', {
+      const response = await fetch('/api/orders', {
           method: 'GET',
           headers: {
               'Content-Type': 'application/json',
@@ -402,7 +402,7 @@ const setupFormHandlers = () => {
     if (!validatePassword(formData)) return;
 
     try {
-        await handleAuthRequest('https://coffee-shop-website-phi.vercel.app/api/auth/register', formData);
+        await handleAuthRequest('/api/auth/register', formData);
         window.location.href = '/frontend/pages/login.html';
     } catch (err) {
         showError(err.message);
@@ -413,7 +413,7 @@ const setupFormHandlers = () => {
   document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     try {
-        const result = await handleAuthRequest('https://coffee-shop-website-phi.vercel.app/api/auth/login', getFormData(e.target));
+        const result = await handleAuthRequest('/api/auth/login', getFormData(e.target));
         localStorage.setItem('token', result.token);
         console.log('Token stocké après login :', result.token); // Log pour déboguer
         window.location.href = '/frontend/pages/shop.html';
@@ -429,7 +429,7 @@ const setupFormHandlers = () => {
     if (!validatePassword(formData)) return;
 
     try {
-        await handleAuthRequest('https://coffee-shop-website-phi.vercel.app/api/auth/reset-password', formData, true);
+        await handleAuthRequest('/api/auth/reset-password', formData, true);
         window.location.href = '/frontend/pages/login.html';
     } catch (err) {
         showError(err.message);
@@ -519,7 +519,7 @@ const fetchProducts = async () => {
       headers['Authorization'] = `Bearer ${token}`; // Ajouter le token si présent
     }
 
-    const response = await fetch('https://coffee-shop-website-phi.vercel.app/api/products', {
+    const response = await fetch('/api/products', {
       method: 'GET',
       headers,
       credentials: 'include'
