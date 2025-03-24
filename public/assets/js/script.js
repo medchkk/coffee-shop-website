@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const loadComponents = () => {
   // Load navbar and footer
   ['navbar', 'footer'].forEach(component => {
-      fetch(`../components/${component}.html`)
+      fetch(`/components/${component}.html`)
           .then(res => res.text())
           .then(html => {
               document.getElementById(`${component}-placeholder`).innerHTML = html;
@@ -142,7 +142,7 @@ const renderCart = (cart) => {
         <div class="col-md-12 mb-3">
             <div class="card">
                 <div class="card-body d-flex align-items-center">
-                    <img src="../assets/images/${item.product.image}" alt="${item.product.name}" class="product-img" style="width: 100px; height: 100px; object-fit: cover;">
+                    <img src="/assets/images/${item.product.image}" alt="${item.product.name}" class="product-img" style="width: 100px; height: 100px; object-fit: cover;">
                     <div class="ms-3 flex-grow-1">
                         <h5 class="card-title">${item.product.name}</h5>
                         <p class="card-text">Price: $${item.product.price.toFixed(2)}</p>
@@ -493,7 +493,7 @@ const renderProducts = (products) => {
   productGrid.innerHTML = products.map(product => `
       <div class="col-lg-4 col-md-6 mb-4">
           <div class="card h-100">
-              <img src="../assets/images/${product.image}" 
+              <img src="/assets/images/${product.image}" 
                    class="product-img" 
                    alt="${product.name}">
               <div class="card-body">
