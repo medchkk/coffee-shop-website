@@ -1,0 +1,234 @@
+:root {
+    --coffee-dark: #6F4E37;
+    --coffee-medium: #8B6B4D;
+    --coffee-light: #D2B48C;
+    --cream: #F5EBE0;
+    --background: #2A211C; /* Dark coffee bean color */
+    --text-color: #F5EBE0; /* Cream text */
+}
+
+/* ===== Global Styles ===== */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background: var(--coffee-dark) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.75rem;
+    color: var(--cream) !important;
+}
+
+.nav-link {
+    color: var(--cream) !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--coffee-light) !important;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('../images/coffee-bg.jpg') center/cover;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 76px; /* Navbar height offset */
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Features Section ===== */
+.features .card {
+    border: none;
+    background: white;
+    transition: transform 0.3s ease;
+}
+
+.features .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Footer ===== */
+footer {
+    background: var(--coffee-dark);
+    color: var(--cream);
+    margin-top: auto;
+    padding: 3rem 0;
+}
+
+.newsletter input {
+    padding: 0.8rem;
+    border: 2px solid var(--coffee-light);
+    border-radius: 25px 0 0 25px;
+}
+
+.newsletter button {
+    background: var(--coffee-light);
+    color: var(--coffee-dark);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0 25px 25px 0;
+    transition: all 0.3s ease;
+}
+
+.newsletter button:hover {
+    background: var(--cream);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .hero {
+        height: 50vh;
+        margin-top: 56px;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .features .col-md-4 {
+        margin-bottom: 2rem;
+    }
+}
+/* ===== Product Grid Styles ===== */
+.products {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.products .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(111, 78, 55, 0.1); /* Coffee brown overlay */
+    border: 1px solid rgba(111, 78, 55, 0.3);
+}
+
+.products .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.product-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    color: #D2B48C; /* Latte cream accent */
+}
+
+.btn-add-to-cart {
+    background-color: var(--coffee-dark);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-add-to-cart:hover {
+    background-color: var(--coffee-medium);
+}
+/* ===== Authentication Forms ===== */
+.auth-section {
+    padding: 6rem 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('../../assets/images/coffee-bg.jpg') center/cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.auth-card h2 {
+    color: #6F4E37;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.auth-card .form-label {
+    font-weight: 600;
+    color: #3d2b1c;
+}
+
+.auth-card .form-control {
+    border: 2px solid #d2b48c;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.auth-card .form-control:focus {
+    border-color: #6F4E37;
+    box-shadow: none;
+}
+
+.auth-card .btn-primary {
+    background-color: #6F4E37;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.auth-card .btn-primary:hover {
+    background-color: #5d3e2d;
+    transform: translateY(-2px);
+}
+/* Reset Password Alert */
+.alert-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.alert-warning i {
+    color: #ffc107;
+}
