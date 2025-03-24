@@ -1,8 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
-console.log('✅ api/index.js is being executed');
+const connectDB = require('../backend/config/db');
 
 // Import routes
 const authRoutes = require('../backend/routes/authRoutes');
@@ -11,69 +10,55 @@ const cartRoutes = require('../backend/routes/cartRoutes');
 const orderRoutes = require('../backend/routes/orderRoutes');
 const userRoutes = require('../backend/routes/userRoutes');
 
-// Log imports for debugging
-console.log('authRoutes:', authRoutes);
-console.log('productRoutes:', productRoutes);
-console.log('cartRoutes:', cartRoutes);
-console.log('orderRoutes:', orderRoutes);
-console.log('userRoutes:', userRoutes);
-
 // Initialize Express app
 const app = express();
 
-console.log('✅ Express app initialized');
-
 // Middleware
 app.use(cors());
-console.log('✅ CORS middleware applied');
-
 app.use(express.json());
-console.log('✅ JSON middleware applied');
 
-// Middleware to log requests for debugging
+// Middleware de débogage
 app.use((req, res, next) => {
   console.log('✅ Middleware called');
   console.log('Request URL:', req.url);
-  console.log('Request path:', req.path);
   console.log('Request method:', req.method);
-  console.log('Request baseUrl:', req.baseUrl);
-  console.log('Request originalUrl:', req.originalUrl);
   next();
 });
 
-// Connect to MongoDB
-const connectDB = require('../backend/config/db');
-connectDB();
-console.log('✅ MongoDB connection initiated');
+// Fonction serverless
+module.exports = async (req, res) => {
+  console.log('✅ api/index.js invoked');
 
-// Routes
-app.use('/api/auth', authRoutes);
-console.log('✅ Auth routes defined');
+  // Vérifier si MongoDB est déjà connecté, sinon connecter
+  if (mongoose.connection.readyState !== 1) { // 1 = connected
+    console.log('Tentative de connexion à MongoDB...');
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('Erreur de connexion MongoDB dans serverless:', err.message);
+      return res.status(500).json({ error: 'Database connection failed' });
+    }
+  } else {
+    console.log('MongoDB déjà connecté');
+  }
 
-app.use('/api/products', productRoutes);
-console.log('✅ Product routes defined');
+  // Définir les routes (doit être fait ici car serverless)
+  app.use('/api/auth', authRoutes);
+  app.use('/api/products', productRoutes);
+  app.use('/api/cart', cartRoutes);
+  app.use('/api/orders', orderRoutes);
+  app.use('/api/users', userRoutes);
 
-app.use('/api/cart', cartRoutes);
-console.log('✅ Cart routes defined');
+  app.get('/api/test', (req, res) => {
+    console.log('✅ /api/test route called');
+    res.status(200).json({ message: 'API test OK' });
+  });
 
-app.use('/api/orders', orderRoutes);
-console.log('✅ Order routes defined');
+  app.use('*', (req, res) => {
+    console.log('❌ No route matched');
+    res.status(404).json({ error: 'Route not found' });
+  });
 
-app.use('/api/users', userRoutes);
-console.log('✅ User routes defined');
-
-app.get('/api/test', (req, res) => {
-  console.log('✅ /api/test route called');
-  res.status(200).json({ message: 'API test OK' });
-});
-console.log('✅ Test route defined');
-
-// Default route for unmatched paths
-app.use('*', (req, res) => {
-  console.log('❌ No route matched');
-  res.status(404).json({ error: 'Route not found' });
-});
-console.log('✅ Default route defined');
-
-// Export the Express app directly (no serverless-http)
-module.exports = app;
+  // Gérer la requête avec Express
+  app(req, res);
+};
