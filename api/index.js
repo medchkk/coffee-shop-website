@@ -15,8 +15,11 @@ console.log('✅ JSON middleware applied');
 // Middleware to log requests
 app.use((req, res, next) => {
     console.log('✅ Middleware called');
-    console.log('Request path:', req.path);
+    console.log('Request URL:', req.url); // Utiliser req.url au lieu de req.path
+    console.log('Request path:', req.path); // Log pour comparer
     console.log('Request method:', req.method);
+    console.log('Request baseUrl:', req.baseUrl); // Log supplémentaire
+    console.log('Request originalUrl:', req.originalUrl); // Log supplémentaire
     next();
 });
 
@@ -27,6 +30,14 @@ app.get('/api/test', (req, res) => {
 });
 
 console.log('✅ Test route defined');
+
+// Default route for unmatched paths
+app.use((req, res) => {
+    console.log('❌ No route matched');
+    res.status(404).json({ message: 'Not found' });
+});
+
+console.log('✅ Default route defined');
 
 // Export as a serverless function
 const handler = serverless(app);
