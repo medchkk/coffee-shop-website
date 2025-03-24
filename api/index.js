@@ -41,10 +41,40 @@ app.use((req, res, next) => {
   next();
 });
 
-// Connect to MongoDB
+// Connect to MongoDB with forced logging
 const connectDB = require('../backend/config/db');
-connectDB();
-console.log('✅ MongoDB connection initiated');
+
+// Fonction pour masquer partiellement l'URI MongoDB (pour la sécurité dans les logs)
+const maskMongoUri = (uri) => {
+  if (!uri) return 'undefined';
+  const [protocol, rest] = uri.split('://');
+  const [auth, host] = rest.split('@');
+  if (auth) {
+    return `${protocol}://[masked-credentials]@${host}`;
+  }
+  return uri;
+};
+
+// Vérification et logs avant la connexion
+console.log('🔍 [MongoDB] Preparing to connect...');
+console.log('🔍 [MongoDB] MONGO_URI:', maskMongoUri(process.env.MONGO_URI));
+
+if (!process.env.MONGO_URI) {
+  console.error('❌ [MongoDB] MONGO_URI is not defined in environment variables');
+  process.exit(1);
+}
+
+// Appel à connectDB avec gestion des erreurs
+console.log('🔍 [MongoDB] Initiating connection...');
+connectDB()
+  .then(() => {
+    console.log('✅ [MongoDB] Connection process completed successfully');
+  })
+  .catch((error) => {
+    console.error('❌ [MongoDB] Failed to connect:', error.message);
+    console.error('❌ [MongoDB] Full error details:', error);
+    process.exit(1);
+  });
 
 // Routes
 app.use('/api/auth', authRoutes);
