@@ -245,7 +245,7 @@ const logout = async () => {
         // Supprimer le token côté client
         localStorage.removeItem('token');
         updateCartCounter(0); // Réinitialiser le compteur du panier
-        window.location.href = '/frontend/pages/login.html'; // Rediriger vers la page de connexion
+        window.location.href = '/login.html'; // Rediriger vers la page de connexion
     } catch (err) {
         console.error('Erreur lors de la déconnexion :', err);
         showError('Failed to logout: ' + err.message);
@@ -320,7 +320,7 @@ const placeOrder = async (e) => {
         });
 
         updateCartCounter(0);
-        window.location.href = '/frontend/pages/order-confirmation.html'; // Rediriger vers une page de confirmation
+        window.location.href = '/order-confirmation.html'; // Rediriger vers une page de confirmation
     } catch (err) {
         console.error('Error placing order:', err);
         showError('Failed to place order: ' + err.message);
@@ -403,7 +403,7 @@ const setupFormHandlers = () => {
 
     try {
         await handleAuthRequest('/api/auth/register', formData);
-        window.location.href = '/frontend/pages/login.html';
+        window.location.href = '/login.html';
     } catch (err) {
         showError(err.message);
     }
@@ -416,7 +416,7 @@ const setupFormHandlers = () => {
         const result = await handleAuthRequest('/api/auth/login', getFormData(e.target));
         localStorage.setItem('token', result.token);
         console.log('Token stocké après login :', result.token); // Log pour déboguer
-        window.location.href = '/frontend/pages/shop.html';
+        window.location.href = '/shop.html';
     } catch (err) {
         showError(err.message);
     }
@@ -430,7 +430,7 @@ const setupFormHandlers = () => {
 
     try {
         await handleAuthRequest('/api/auth/reset-password', formData, true);
-        window.location.href = '/frontend/pages/login.html';
+        window.location.href = '/login.html';
     } catch (err) {
         showError(err.message);
     }
